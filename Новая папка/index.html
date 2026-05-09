@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ISSYK-KUL PEARL | Жемчужина озера</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(145deg, #f0f7fc 0%, #eef2f0 100%); color: #1a3f4f; scroll-behavior: smooth; }
+        :root { --pearl: #f4f9fe; --deep-sea: #1a4e6f; --mist: #bdd4e2; --gold-sand: #e2bc7c; --wave-blue: #2f7c8c; --dark-navy: #0e2e40; }
+        @keyframes ripple { 0% { transform: scale(0.8); opacity: 0.6; } 100% { transform: scale(1.6); opacity: 0; } }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateX(-30px);} to { opacity: 1; transform: translateX(0);} }
+        .navbar { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03); padding: 0.8rem 0; }
+        .navbar-brand { font-size: 1.9rem; font-weight: 700; background: linear-gradient(135deg, #1a4e6f, #3c8db0); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -0.5px; }
+        .nav-link { font-weight: 500; color: #1a4e6f !important; transition: 0.3s; margin: 0 0.4rem; }
+        .nav-link:hover { color: var(--gold-sand) !important; }
+        .hero { background: radial-gradient(circle at 20% 30%, #d4e6f0, #c2d9e8); padding: 100px 0; border-radius: 0 0 60px 60px; position: relative; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.8rem; font-weight: 700; color: #1a4e6f; text-shadow: 2px 2px 12px rgba(0,0,0,0.05); }
+        .filter-btn { background: transparent; border: 1px solid #1a4e6f40; padding: 8px 24px; border-radius: 50px; margin: 0 6px 12px; transition: 0.2s; font-weight: 500; }
+        .filter-btn.active, .filter-btn:hover { background: #1a4e6f; color: white; border-color: #1a4e6f; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 30px; margin: 40px 0; }
+        .product-card { background: rgba(255, 255, 252, 0.9); backdrop-filter: blur(2px); border-radius: 28px; overflow: hidden; transition: 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1); border: 1px solid rgba(255, 240, 210, 0.6); box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.08); cursor: pointer; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 28px 38px -18px rgba(26, 78, 111, 0.3); border-color: var(--gold-sand); background: white; }
+        .card-img { height: 210px; background-size: cover; background-position: center; transition: 0.3s; }
+        .product-card:hover .card-img { transform: scale(0.98); }
+        .badge-prop { background: #eef2f6; padding: 4px 12px; border-radius: 40px; font-size: 0.7rem; font-weight: 500; color: #1a4e6f; }
+        .price { font-size: 1.5rem; font-weight: 800; color: #1f5d7e; }
+        .btn-pearl { background: #1a4e6f; border: none; border-radius: 50px; padding: 8px 18px; color: white; font-weight: 600; transition: 0.2s; }
+        .btn-pearl:hover { background: #e2bc7c; transform: scale(1.02); }
+        .sound-wave { position: fixed; bottom: 24px; right: 24px; background: #1a4e6fcc; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(6px); z-index: 1000; cursor: pointer; box-shadow: 0 0 12px var(--gold-sand); transition: 0.2s; }
+        .sound-wave:hover { transform: scale(1.05); background: #1a4e6f; }
+        .pearl-toast { position: fixed; bottom: 30px; left: 20px; background: #1a4e6fd9; backdrop-filter: blur(12px); padding: 12px 24px; border-radius: 50px; color: white; z-index: 1100; animation: fadeSlide 0.3s; font-weight: 500; }
+        footer { background: #0e2e40; color: #cddfe8; padding: 3rem 0 1.5rem; margin-top: 50px; }
+        .section-title { text-align: center; margin: 2rem 0 0.5rem; font-weight: 700; color: #1a4e6f; font-family: 'Playfair Display', serif; }
+        .section-title:after { content: ''; display: block; width: 80px; height: 3px; background: var(--gold-sand); margin: 12px auto; border-radius: 4px; }
+        .form-card { background: rgba(255, 255, 245, 0.8); border-radius: 32px; padding: 28px; backdrop-filter: blur(4px); border: 1px solid rgba(255,240,210,0.8); }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.2rem; } }
+    </style>
+</head>
+<body>
+
+<audio id="waveAudio" preload="auto">
+    <source src="https://www.soundjay.com/nature/sounds/ocean-wave-1.mp3" type="audio/mpeg">
+</audio>
+
+<div class="sound-wave" id="waveButton">
+    <i class="fas fa-water" style="color: white; font-size: 1.7rem;"></i>
+</div>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="fas fa-gem"></i> ISSYK-KUL PEARL</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#home">Глубина</a></li>
+                <li class="nav-item"><a class="nav-link" href="#catalog">Жемчужины</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">Легенда</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Отражение</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" id="cartBtn"><i class="fas fa-shopping-bag"></i> <span id="cartCount">0</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="#" id="wishlistBtn"><i class="far fa-heart"></i> <span id="wishCount">0</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section id="home" class="hero text-center">
+    <div class="container">
+        <h1>Жемчуг, рождённый водой</h1>
+        <p class="lead">Косметика из глубин Иссык-Куля: облепиха, соль, прополис и вековые традиции</p>
+        <button class="btn-pearl btn-lg mt-4 px-5" onclick="playWave(); document.getElementById('catalog').scrollIntoView({behavior:'smooth'});">Погрузиться</button>
+    </div>
+</section>
+
+<section id="about" class="container my-5 py-3">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h2 class="fw-bold">Сказание о чистоте</h2>
+            <p>В водах Иссык-Куля скрыта сила, дарящая коже сияние, как лунная дорожка. Наши рецепты собраны из вековых знаний: мёд с горных пасек, масло облепихи, солёные травы и жемчужная пыль. <strong>ISSYK-KUL PEARL</strong> — живая энергия озера в каждой баночке.</p>
+            <i class="fas fa-feather-alt" style="color:#e2bc7c;"></i> Натурально, любовно, с душой Кыргызстана.
+        </div>
+        <div class="col-md-6 text-center">
+            <i class="fas fa-water" style="font-size: 5rem; color: #1a4e6f; opacity: 0.6;"></i>
+            <p class="mt-2 fst-italic">«Традиции предков — современная роскошь»</p>
+        </div>
+    </div>
+</section>
+
+<div class="container mt-3">
+    <div class="d-flex flex-wrap justify-content-center" id="filterContainer">
+        <button class="filter-btn active" data-cat="all">Все (50)</button>
+        <button class="filter-btn" data-cat="face">💎 JAMAL (лицо)</button>
+        <button class="filter-btn" data-cat="aruu">🧼 ARUUZAT (очищение/уход)</button>
+        <button class="filter-btn" data-cat="men">🐺 AKBARS (мужское)</button>
+        <button class="filter-btn" data-cat="antiage">✨ ANTI-AGE</button>
+        <button class="filter-btn" data-cat="kids">👶 BALALYK (детское)</button>
+        <button class="filter-btn" data-cat="fito">🌿 FITO</button>
+    </div>
+</div>
+
+<section id="catalog" class="container">
+    <h2 class="section-title">Живые коллекции</h2>
+    <div id="productsGrid" class="products-grid"></div>
+</section>
+
+<section id="contact" class="container my-5">
+    <div class="form-card">
+        <h3 class="text-center">Отзовитесь озёрам</h3>
+        <form id="contactForm">
+            <div class="mb-3">
+                <label class="form-label">Имя</label>
+                <input type="text" class="form-control" id="formName" placeholder="Айдана">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="formEmail" placeholder="hello@pearl.kg">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Какая коллекция вдохновила?</label>
+                <textarea class="form-control" id="formMsg" rows="2" placeholder="Напишите, что ищете..."></textarea>
+            </div>
+            <button type="submit" class="btn-pearl w-100 py-2">Отправить жемчужное послание</button>
+            <div id="formStatus" class="mt-3 text-center small"></div>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-4"><i class="fas fa-map-pin"></i> Иссык-Куль, Кыргызстан</div>
+            <div class="col-md-4"><i class="far fa-gem"></i> Натуральная косметика</div>
+            <div class="col-md-4"><i class="fas fa-dove"></i> #issykkulpearl</div>
+        </div>
+        <hr class="mt-3" style="background:#5982a0;">
+        <p>© 2025 ISSYK-KUL PEARL — Жемчужина природного ухода</p>
+    </div>
+</footer>
+
+<script>
+    // ---------------------------- 50 ТОВАРОВ (точно по вашему описанию) ----------------------------
+    const productsData = [
+        // JAMAL (лицо) id 1-13
+        { id: 1, name: "BB-крем «Жемчужный тонус 0.1»", category: "face", price: 1200, volume: "30 мл", desc: "Выравнивание тона, адаптация под цвет кожи, SPF эффект, увлажнение 24ч", properties: ["Выравнивание", "SPF", "Увлажнение"], ingredients: ["вода Иссык-Куля", "масло облепихи", "масло ши", "экстракт солодки", "диоксид титана"], img: "https://i.ibb.co/qYgv4zLt/IMG-3960.jpg"  },
+        { id: 2, name: "BB-крем «Жемчужный тонус 0.2»", category: "face", price: 1200, volume: "30 мл", desc: "Golden skin tone, натуральный glow, сияющий финиш.", properties: ["GLOW", "Питание"], ingredients: ["вода Иссык-Куля", "масло ши", "облепиха", "оксиды железа"], img: "https://i.postimg.cc/8k9ZgWd2/Whats-App-Image-2026-05-09-at-19-16-22.jpg" },
+        { id: 3, name: "BB-крем «Жемчужный тонус 0.3»", category: "face", price: 1200, volume: "30 мл", desc: "Оттенок «Тянь-Шаньский орех», питание, защита, pearl effect", properties: ["Питание", "Защита"], ingredients: ["вода Иссык-Куля", "масло ши", "экстракт лапчатки"], img: "https://i.postimg.cc/VLMvKQkv/Whats-App-Image-2026-05-09-at-21-06-56.jpg" },
+        { id: 4, name: "Помада «Медовая свежесть»", category: "face", price: 350, volume: "10 мл", desc: "Питание губ, мед и прополис, заживление, защита от сухости", properties: ["Питание", "Заживление"], ingredients: ["мёд", "прополис", "пчелиный воск"], img: "https://i.postimg.cc/SxTB8jbR/Whats-App-Image-2026-05-09-at-19-16-23.jpg" },
+        { id: 5, name: "Помада «Облепиховый закат»", category: "face", price: 380, volume: "10 мл", desc: "Лечебная формула, облепиховое масло, восстановление губ", properties: ["Лечебная", "Восстановление"], ingredients: ["облепиха", "мед", "воск"], img: "https://i.postimg.cc/JzGTfqvf/Whats-App-Image-2026-05-09-at-19-16-23-(1).jpg" },
+        { id: 6, name: "Помада «Прополисный барьер»", category: "face", price: 400, volume: "10 мл", desc: "Anti herpes care, защита губ, прополис и календула, healing barrier", properties: ["Антигерпес", "Защита"], ingredients: ["прополис", "календула", "масло чайного дерева"], img: "https://i.postimg.cc/wBP3W6LN/Whats-App-Image-2026-05-09-at-19-16-22-(2).jpg" },
+        { id: 7, name: "Тонер «Живая вода»", category: "face", price: 600, volume: "200 мл", desc: "Глубокое увлажнение, минералы Иссык-Куля, живая вода, сияние кожи", properties: ["Увлажнение", "Сияние"], ingredients: ["вода Иссык-Куля", "экстракт облепихи", "глицерин"], img: "https://i.postimg.cc/PJfGYDJ1/Whats-App-Image-2026-05-09-at-19-16-23-(2).jpg" },
+        { id: 8, name: "Тонер «Свежий берег»", category: "face", price: 550, volume: "200 мл", desc: "Oily skin control, матирующий эффект, полынь и крапива, чистая кожа", properties: ["Матирование", "Очищение"], ingredients: ["экстракт полыни", "экстракт крапивы", "соль Иссык-Куля"], img: "https://i.postimg.cc/gJNt9TcL/Whats-App-Image-2026-05-09-at-19-16-23-(3).jpg" },
+        { id: 9, name: "Крем «Утро нежности»", category: "face", price: 850, volume: "50 мл", desc: "Дневное увлажнение, легкая текстура, ромашка и облепиха, natural glow", properties: ["Увлажнение", "Легкость"], ingredients: ["вода", "масло облепихи", "экстракт ромашки"], img: "https://i.postimg.cc/CxsQH5yf/Whats-App-Image-2026-05-09-at-19-16-23-(4).jpg" },
+        { id: 10, name: "Крем «Ночь восстановления»", category: "face", price: 950, volume: "50 мл", desc: "Ночное питание, восстановление кожи, ель Шренка, anti stress effect", properties: ["Питание", "Восстановление"], ingredients: ["хвойный гидролат", "масло ши", "прополис"], img: "https://i.postimg.cc/T1n9dNfg/Whats-App-Image-2026-05-09-at-19-16-16.jpg" },
+        { id: 11, name: "Крем «Облепиховое утро»", category: "face", price: 550, volume: "200 мл", desc: "Глубокое увлажнение, healthy glow, honey & sea buckthorn, gentle cleansing", properties: ["Питание", "Увлажнение"], ingredients: ["облепиха", "мёд", "глицерин"], img: "https://i.postimg.cc/nr7JHxst/Whats-App-Image-2026-05-09-at-19-16-16-(1).jpg" },
+        { id: 12, name: "SPF-крем «Жемчужный риф»", category: "face", price: 1200, volume: "50 мл", desc: "SPF 30, защита от солнца, pearl sunscreen, увлажнение", properties: ["SPF", "Защита"], ingredients: ["диоксид титана", "оксид цинка", "вода Иссык-Куля"], img: "https://i.postimg.cc/RV983KyF/Whats-App-Image-2026-05-09-at-19-16-15.jpg" },
+        { id: 13, name: "Крем для тела «Берег Иссык-Куля»", category: "face", price: 800, volume: "200 мл", desc: "Body hydration, calming care, облепиха и соль Иссык-Куля, silky skin", properties: ["Увлажнение", "Успокоение"], ingredients: ["облепиха", "соль", "масло ши"], img: "https://allwebs.ru/images/2026/05/09/063e3dd96563ea1c505f076e0a19f923.jpeg" },
+        // ARUUZAT (очищение, декор, уход за волосами/телом) id 14-37
+        { id: 14, name: "Пилинг «Жемчужное обновление»", category: "aruu", price: 950, volume: "100 мл", desc: "Обновление кожи, AHA-комплекс, облепиха, glass skin effect", properties: ["Пилинг", "Обновление"], ingredients: ["AHA-кислоты", "облепиха", "соль"],img: "https://i.postimg.cc/HsR6wMPn/Whats-App-Image-2026-05-09-at-19-16-17.jpg" },
+        { id: 15, name: "Шампунь «Золотое утро»", category: "aruu", price: 650, volume: "250 мл", desc: "Оттеночный шампунь, золотистый блеск, honey glow hair", properties: ["Оттеночный", "Блеск"], ingredients: ["ревень", "мед", "экстракт облепихи"], img: "https://i.postimg.cc/QCWThFgP/Whats-App-Image-2026-05-09-at-19-16-17-(1).jpg" },
+        { id: 16, name: "Шампунь «Ягодный бриз»", category: "aruu", price: 650, volume: "250 мл", desc: "Berry tone, сияние волос, мягкое окрашивание", properties: ["Оттеночный", "Увлажнение"], ingredients: ["барбарис", "клюква", "мягкие ПАВ"], img: "https://i.postimg.cc/WzM00DD1/Whats-App-Image-2026-05-09-at-19-16-17-(2).jpg" },
+        { id: 17, name: "Шампунь «Барбарисовая ночь»", category: "aruu", price: 650, volume: "250 мл", desc: "Wine hair tint, глубокий оттенок, glossy hair", properties: ["Оттеночный", "Блеск"], ingredients: ["барбарис", "хна", "витамин Е"], img: "https://i.postimg.cc/x8ybcW7q/Whats-App-Image-2026-05-09-at-19-16-16-(2).jpg" },
+        { id: 18, name: "Маска «Белый жемчуг»", category: "aruu", price: 500, volume: "100 мл", desc: "Очищение пор, white clay, pearl skin", properties: ["Очищение", "Матовость"], ingredients: ["каолин", "экстракт лапчатки", "вода"], img: "https://i.postimg.cc/2Sq8tsGr/Whats-App-Image-2026-05-09-at-19-16-16-(3).jpg" },
+        { id: 19, name: "Маска «Чёрный нефрит»", category: "aruu", price: 550, volume: "100 мл", desc: "Acne control, detox skin, black clay", properties: ["Детокс", "Антиакне"], ingredients: ["черная глина", "активированный уголь", "чайное дерево"], img: "https://i.postimg.cc/wTM6tCSs/Whats-App-Image-2026-05-09-at-19-16-16-(4).jpg" },
+        { id: 20, name: "Румяна «Соты заката»", category: "aruu", price: 700, volume: "5 г", desc: "Mineral blush, sunset glow, pearl powder", properties: ["Сияние", "Натуральные"], ingredients: ["слюда", "оксид железа", "перламутр"], img: "https://i.postimg.cc/hPkHSNny/Whats-App-Image-2026-05-09-at-19-16-17-(3).jpg" },
+        { id: 21, name: "Контуринг «Тень Тянь-Шаня»", category: "aruu", price: 650, volume: "5 г", desc: "Natural contour, soft shadow, mineral formula", properties: ["Контуринг", "Матовость"], ingredients: ["оксид железа", "каолин", "слюда"], img: "https://i.postimg.cc/9MsvrkTz/Whats-App-Image-2026-05-09-at-19-16-19.jpg" },
+        { id: 22, name: "Пудра «Иссык-Кульская пыльца»", category: "aruu", price: 800, volume: "10 г", desc: "Silky matte, rice powder, pearl finish", properties: ["Матирование", "Сияние"], ingredients: ["рисовый крахмал", "пчелиная пыльца", "диоксид титана"], img: "https://i.postimg.cc/YSbnms5P/Whats-App-Image-2026-05-09-at-19-16-18.jpg" },
+        { id: 23, name: "Бронзер «Золотой берег»", category: "aruu", price: 750, volume: "5 г", desc: "Summer glow, golden tan, mineral bronzer", properties: ["Сияние", "Бронза"], ingredients: ["оксиды железа", "слюда", "какао-пудра"], img: "https://i.postimg.cc/XYvQ68Gk/Whats-App-Image-2026-05-09-at-19-16-19-(1).jpg" },
+        { id: 24, name: "Мыло «Жетиген»", category: "aruu", price: 350, volume: "100 г", desc: "Handcrafted soap, лаванда и герань, натуральные масла, мягкое очищение", properties: ["Очищение", "Аромат"], ingredients: ["оливковое масло", "кокос", "лаванда"], img: "https://i.postimg.cc/YSM2Sv7z/Whats-App-Image-2026-05-09-at-19-16-19-(3).jpg" },
+        { id: 25, name: "Детское мыло", category: "aruu", price: 300, volume: "100 г", desc: "Baby safe, гипоаллергенно, ромашка и череда, без отдушек", properties: ["Гипоаллергенно", "Мягкость"], ingredients: ["оливковое масло", "экстракт ромашки"], img: "https://i.postimg.cc/05BNC5Gb/Whats-App-Image-2026-05-09-at-19-16-19-(2).jpg" },
+        { id: 26, name: "Лечебное мыло «Айыктыруу»", category: "aruu", price: 420, volume: "110 г", desc: "Healing soap, проблемная кожа, anti dermatitis, natural herbs", properties: ["Лечебное", "Антисептик"], ingredients: ["черный тмин", "деготь", "облепиха"], img: "https://i.postimg.cc/BnDtbWKn/Whats-App-Image-2026-05-09-at-19-16-18-(2).jpg" },
+        { id: 27, name: "Хозяйственное мыло «Тазалык»", category: "aruu", price: 250, volume: "150 г", desc: "Eco cleaning, высокая пена, натуральная формула", properties: ["Чистка", "Эко"], ingredients: ["кокосовое масло", "соль", "сода"], img: "https://i.postimg.cc/7L3CsvP4/Whats-App-Image-2026-05-09-at-19-16-18-(1).jpg" },
+        { id: 28, name: "Шампунь «Полынная свежесть»", category: "aruu", price: 550, volume: "250 мл", desc: "Oily scalp care, свежесть кожи головы, можжевельник, clean scalp", properties: ["Очищение", "Свежесть"], ingredients: ["полынь", "можжевельник", "соль"], img: "https://i.postimg.cc/mgwkCYms/Whats-App-Image-2026-05-09-at-19-16-18-(3).jpg" },
+        { id: 29, name: "Шампунь «Облепиховое восстановление»", category: "aruu", price: 580, volume: "250 мл", desc: "Repair shampoo, dry hair recovery, honey & sea buckthorn", properties: ["Восстановление", "Питание"], ingredients: ["облепиха", "мед", "кератин"], img: "https://i.postimg.cc/KzK86dxL/Whats-App-Image-2026-05-09-at-19-16-18-(4).jpg" },
+        { id: 30, name: "Шампунь «Ласковые волны»", category: "aruu", price: 450, volume: "250 мл", desc: "Kids shampoo, без сульфатов, мягкое очищение, sensitive scalp", properties: ["Мягкость", "Детский"], ingredients: ["лапчатка", "ромашка", "глицерин"], img: "https://i.postimg.cc/bYCRHnFm/Whats-App-Image-2026-05-09-at-19-16-18-(5).jpg" },
+        { id: 31, name: "Бальзам «Сияние Иссык-Куля»", category: "aruu", price: 550, volume: "200 мл", desc: "Silky shine, восстановление волос, keratin care, healthy hair", properties: ["Блеск", "Восстановление"], ingredients: ["облепиха", "кератин", "пантенол"], img: "https://i.postimg.cc/9Xpk3zgc/Whats-App-Image-2026-05-09-at-19-16-17-(4).jpg" },
+        { id: 32, name: "Бальзам «Корень силы»", category: "aruu", price: 580, volume: "200 мл", desc: "Anti hair loss, root strengthening, natural herbs", properties: ["Укрепление", "Против выпадения"], ingredients: ["крапива", "репейное масло", "хвощ"], img: "https://i.postimg.cc/9F0Jvbqv/Whats-App-Image-2026-05-09-at-19-16-17-(5).jpg" },
+        { id: 33, name: "Гель для душа «Утренний бриз»", category: "aruu", price: 500, volume: "250 мл", desc: "Refreshing shower gel, mint energy, morning freshness", properties: ["Освежение", "Бодрость"], ingredients: ["мята", "огурец", "глицерин"], img: "https://i.postimg.cc/W3fJrGbb/Whats-App-Image-2026-05-09-at-19-16-20.jpg" },
+        { id: 34, name: "Гель для душа «Медовая лагуна»", category: "aruu", price: 520, volume: "250 мл", desc: "Moisturizing body wash, honey care, soft skin", properties: ["Увлажнение", "Питание"], ingredients: ["мед", "облепиха", "кокосовые ПАВ"], img: "https://i.postimg.cc/PNnJz2Gj/Whats-App-Image-2026-05-09-at-19-16-20-(1).jpg" },
+        { id: 35, name: "Гель для душа «Хвойный лес»", category: "aruu", price: 500, volume: "250 мл", desc: "Forest therapy, pine freshness, toning shower gel", properties: ["Тонизирование", "Свежесть"], ingredients: ["хвоя", "эфирное масло ели", "мята"], img: "https://i.postimg.cc/x1Y33SSy/Whats-App-Image-2026-05-09-at-19-16-20-(2).jpg" },
+        { id: 36, name: "Скраб «Соляной берег»", category: "aruu", price: 600, volume: "200 г", desc: "Anti cellulite, sea salt scrub, smooth skin", properties: ["Детокс", "Разглаживание"], ingredients: ["соль Иссык-Куля", "масло кокоса", "грейпфрут"], img: "https://i.postimg.cc/nz6vsykm/Whats-App-Image-2026-05-09-at-19-16-19-(4).jpg" },
+        { id: 37, name: "Скраб «Облепиховый грот»", category: "aruu", price: 550, volume: "200 г", desc: "Sensitive skin scrub, gentle exfoliation, nourishing oils", properties: ["Мягкий пилинг", "Питание"], ingredients: ["косточки облепихи", "сахар", "масло ши"], img: "https://i.postimg.cc/QxNMQ6y1/Whats-App-Image-2026-05-09-at-19-16-21.jpg" },
+        // AKBARS (мужское) id 38-42
+        { id: 38, name: "Шампунь «Акбаров пик»", category: "men", price: 550, volume: "250 мл", desc: "Men shampoo, fresh scalp, mountain energy, 2 in 1", properties: ["Очищение", "Свежесть"], ingredients: ["можжевельник", "крапива", "камфора"], img: "https://i.postimg.cc/mZnmWqWZ/Whats-App-Image-2026-05-09-at-19-16-20-(3).jpg" },
+        { id: 39, name: "Мыло «Чий-Таш»", category: "men", price: 380, volume: "120 г", desc: "Men soap, deep cleansing, woody aroma", properties: ["Глубокое очищение", "Аромат"], ingredients: ["чий", "соль", "пихта"], img: "https://i.postimg.cc/XY4Hs5b6/Whats-App-Image-2026-05-09-at-19-16-21-(1).jpg" },
+        { id: 40, name: "Гель для бритья «Мягкий барс»", category: "men", price: 450, volume: "100 мл", desc: "Shaving gel, soothing care, aloe & propolis", properties: ["Успокоение", "Скольжение"], ingredients: ["алоэ", "прополис", "глицерин"], img: "https://i.postimg.cc/bvM4Vvgy/Whats-App-Image-2026-05-09-at-19-16-20-(4).jpg" },
+        { id: 41, name: "Крем «Каменный ветер»", category: "men", price: 750, volume: "50 мл", desc: "After shave cream, calming effect, hydration", properties: ["Увлажнение", "Успокоение"], ingredients: ["прополис", "пантенол", "ромашка"], img: "https://i.postimg.cc/BZC1xPNk/Whats-App-Image-2026-05-09-at-19-16-24.jpg" },
+        { id: 42, name: "Крем для тела «Снежный барс»", category: "men", price: 650, volume: "150 мл", desc: "Men body cream, winter hydration, mountain herbs", properties: ["Питание", "Защита"], ingredients: ["масло ши", "облепиха", "кедр"], img: "https://i.postimg.cc/FR47ShSd/Whats-App-Image-2026-05-09-at-19-16-24-(1).jpg" },
+        // ANTI-AGE (id 43-44)
+        { id: 43, name: "Соль для ванны «Молодость озера»", category: "antiage", price: 400, volume: "500 г", desc: "Anti age bath salt, relaxation, skin renewal", properties: ["Расслабление", "Омоложение"], ingredients: ["соль", "облепиха", "лаванда"], img: "https://i.postimg.cc/fW5fMP4p/Whats-App-Image-2026-05-09-at-19-16-21-(2).jpg" },
+        { id: 44, name: "Пенка «Облако Иссык-Куля»", category: "antiage", price: 650, volume: "500 мл", desc: "Luxury bath foam, relaxation therapy, honey & lavender", properties: ["Релакс", "Увлажнение"], ingredients: ["кокамидопропилбетаин", "мед", "лаванда"], img: "https://i.postimg.cc/XqXGjQFz/Whats-App-Image-2026-05-09-at-19-16-21-(3).jpg" },
+        // BALALYK (детское) id 45-46
+        { id: 45, name: "Крем «Чий-Чий»", category: "kids", price: 600, volume: "50 мл", desc: "Diaper cream, baby protection, chamomile care", properties: ["Защита", "Успокоение"], ingredients: ["лапчатка", "облепиха", "цинк"], img: "https://i.postimg.cc/W4Mf87d0/Whats-App-Image-2026-05-09-at-19-16-21-(4).jpg" },
+        { id: 46, name: "Детская пена для ванны", category: "kids", price: 500, volume: "300 мл", desc: "Kids bath foam, hypoallergenic, gentle bubbles", properties: ["Мягкость", "Безопасно"], ingredients: ["децил-глюкозид", "ромашка", "календула"], img: "https://i.postimg.cc/WpfSMy9z/Whats-App-Image-2026-05-09-at-19-16-22-(3).jpg" },
+        // FITO (id 47-50)
+        { id: 47, name: "Чай «Иссык-Кульский вечер»", category: "fito", price: 350, volume: "50 г", desc: "Vitamin tea, sea buckthorn, relaxing herbs", properties: ["Витаминный", "Согревание"], ingredients: ["шиповник", "облепиха", "чабрец"], img: "https://i.postimg.cc/Z5z8Hz6z/Whats-App-Image-2026-05-09-at-19-16-22-(4).jpg" },
+        { id: 48, name: "Чай «Сонная бухта»", category: "fito", price: 320, volume: "50 г", desc: "Sleep tea, calming herbs, night relaxation", properties: ["Релакс", "Сон"], ingredients: ["мелисса", "мята", "ромашка"], img: "https://i.postimg.cc/cH3YwD67/Whats-App-Image-2026-05-09-at-19-16-24-(2).jpg" },
+        { id: 49, name: "Сироп «Жемчужный»", category: "fito", price: 450, volume: "200 мл", desc: "Immunity syrup, vitamin boost, honey & sea buckthorn", properties: ["Иммунитет", "Энергия"], ingredients: ["облепиха", "мед", "шиповник"], img: "https://i.postimg.cc/j5n6vx35/Whats-App-Image-2026-05-09-at-19-16-25.jpg" },
+        { id: 50, name: "Сироп «Тянь-Шаньская сила»", category: "fito", price: 480, volume: "200 мл", desc: "Energy syrup, ginger & rosehip, natural power", properties: ["Тонизирование", "Бодрость"], ingredients: ["имбирь", "лимон", "мед"], img: "https://i.postimg.cc/hGyMp3Sz/Whats-App-Image-2026-05-09-at-19-16-24-(3).jpg" }
+    ];
+
+    // ---------- ФУНКЦИОНАЛ КОРЗИНЫ, ИЗБРАННОГО, ЗВУКА ----------
+    let cart = JSON.parse(localStorage.getItem('pearl_cart_final')) || [];
+    let wishlist = JSON.parse(localStorage.getItem('pearl_wish_final')) || [];
+
+    function playWave() {
+        const audio = document.getElementById('waveAudio');
+        if(audio) { audio.currentTime = 0; audio.play().catch(e=>console.log); }
+        const ripple = document.createElement('div');
+        ripple.style.position = 'fixed'; ripple.style.top = '0'; ripple.style.left = '0'; ripple.style.width = '100%'; ripple.style.height = '100%'; ripple.style.pointerEvents = 'none'; ripple.style.background = 'radial-gradient(circle, rgba(226,188,124,0.25) 0%, transparent 80%)'; ripple.style.animation = 'ripple 0.8s ease-out'; ripple.style.zIndex = '9999'; document.body.appendChild(ripple); setTimeout(()=>ripple.remove(), 700);
+    }
+
+    function showToast(msg) {
+        let t = document.createElement('div'); t.className = 'pearl-toast'; t.innerHTML = `<i class="fas fa-water"></i> ${msg}`; document.body.appendChild(t); setTimeout(()=>t.remove(), 2500);
+    }
+
+    function updateCounters() {
+        document.getElementById('cartCount').innerText = cart.reduce((s,i)=>s+i.qty,0);
+        document.getElementById('wishCount').innerText = wishlist.length;
+        localStorage.setItem('pearl_cart_final', JSON.stringify(cart));
+        localStorage.setItem('pearl_wish_final', JSON.stringify(wishlist));
+    }
+
+    let currentCat = "all";
+    function renderProducts() {
+        let filtered = currentCat === "all" ? productsData : productsData.filter(p => p.category === currentCat);
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = filtered.map(p => `
+            <div class="product-card" data-id="${p.id}">
+                <div class="card-img" style="background-image: url('${p.img}'); background-size: cover; background-position: center;"></div>
+                <div class="p-3">
+                    <h5 class="fw-bold">${p.name}</h5>
+                    <div class="d-flex flex-wrap gap-1 my-1">${p.properties.map(pr => `<span class="badge-prop">${pr}</span>`).join('')}</div>
+                    <p class="small text-secondary mt-1">${p.desc}</p>
+                    <div><span class="price">${p.price} сом</span> <span class="text-muted ms-2">${p.volume}</span></div>
+                    <div class="small text-primary mt-1">🌿 ${p.ingredients.slice(0,2).join(', ')}...</div>
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn-pearl add-cart" data-id="${p.id}"><i class="fas fa-bag-shopping"></i> В корзину</button>
+                        <button class="btn btn-outline-secondary rounded-pill wish-btn ${wishlist.includes(p.id) ? 'active-wish' : ''}" data-id="${p.id}" style="border-color:#e2bc7c;"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        document.querySelectorAll('.add-cart').forEach(btn => {
+            btn.addEventListener('click', (e) => { e.stopPropagation(); let id = +btn.dataset.id; let exist = cart.find(i=>i.id===id); if(exist) exist.qty++; else cart.push({id, qty:1}); updateCounters(); playWave(); showToast("Добавлено в корзину ✨"); });
+        });
+        document.querySelectorAll('.wish-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => { e.stopPropagation(); let id = +btn.dataset.id; if(wishlist.includes(id)) wishlist = wishlist.filter(i=>i!==id); else wishlist.push(id); updateCounters(); renderProducts(); playWave(); showToast(wishlist.includes(id)?"В избранном 💖":"Удалено"); });
+        });
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', (e) => { if(e.target.classList.contains('add-cart') || e.target.classList.contains('wish-btn')) return; let prod = productsData.find(p=>p.id === +card.dataset.id); alert(`✨ ${prod.name}\nОбъём: ${prod.volume}\nЦена: ${prod.price} сом\nСостав: ${prod.ingredients.join(', ')}\nСвойства: ${prod.properties.join(', ')}`); playWave(); });
+        });
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+            this.classList.add('active');
+            currentCat = this.dataset.cat;
+            renderProducts();
+            playWave();
+        });
+    });
+
+    // форма
+    const form = document.getElementById('contactForm');
+    const nameInp = document.getElementById('formName'), emailInp = document.getElementById('formEmail'), msgInp = document.getElementById('formMsg'), statusDiv = document.getElementById('formStatus');
+    if(localStorage.getItem('pearl_fname')) nameInp.value = localStorage.getItem('pearl_fname');
+    if(localStorage.getItem('pearl_femail')) emailInp.value = localStorage.getItem('pearl_femail');
+    if(localStorage.getItem('pearl_fmsg')) msgInp.value = localStorage.getItem('pearl_fmsg');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let n = nameInp.value.trim(), e_m = emailInp.value.trim(), m = msgInp.value.trim();
+        if(!n || !e_m || !m) { statusDiv.innerHTML = '<div class="alert alert-warning">🌊 Заполните все поля!</div>'; setTimeout(()=>statusDiv.innerHTML='',2800); return; }
+        if(!e_m.includes('@')) { statusDiv.innerHTML = '<div class="alert alert-danger">Почта должна быть настоящей</div>'; setTimeout(()=>statusDiv.innerHTML='',2500); return; }
+        localStorage.setItem('pearl_fname', n); localStorage.setItem('pearl_femail', e_m); localStorage.setItem('pearl_fmsg', m);
+        statusDiv.innerHTML = '<div class="alert alert-success">💧 Ваше послание отправлено!</div>'; setTimeout(()=>statusDiv.innerHTML='',3500);
+        playWave();
+    });
+
+    document.getElementById('cartBtn').addEventListener('click', ()=>{ let total = cart.reduce((s,i)=>s+i.qty,0); showToast(total?`В корзине ${total} товаров`:"Корзина пуста"); playWave(); });
+    document.getElementById('wishlistBtn').addEventListener('click', ()=>{ showToast(`Избранное: ${wishlist.length} товаров`); playWave(); });
+    document.getElementById('waveButton').addEventListener('click', ()=>{ playWave(); showToast("Звук волн Иссык-Куля"); });
+
+    renderProducts();
+    updateCounters();
+    setTimeout(()=> showToast("Добро пожаловать в мир живой косметики 🌊"), 2000);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
